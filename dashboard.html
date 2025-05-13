@@ -24,71 +24,219 @@
         padding: 40px;
       }
 
-      h1 {
-        font-size: 28px;
-        margin-bottom: 10px;
-      }
-
       p.subtitle {
         color: #555;
         margin-bottom: 30px;
       }
 
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+      :root {
+        /* brand colours */
+        --blue-500: #377cf7; /* progress / icon blue */
+        --blue-200: #e8efff; /* light circle bg */
+        --green-500: #34c759;
+        --green-200: #d7fadd;
+        --purple-500: #9059ff;
+        --purple-200: #efe8ff;
+
+        /* greys */
+        --grey-900: #121619; /* main text */
+        --grey-700: #4a5560; /* sub-text */
+        --grey-600: #6b7280;
+        --grey-300: #d9dbe1; /* card border, progress track */
+        --grey-200: #eef0f4; /* table row hover / badge bg */
+        --grey-50: #fafbfc; /* table row alt */
+
+        /* shadows (very subtle) */
+        --card-shadow: 0 1px 1px rgba(0, 0, 0, 0.03);
+
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        line-height: 1.45;
+        font-size: 15px; /* body-copy base (matches screenshot) */
       }
 
-      @media (max-width: 768px) {
-        .grid {
+      /* reset / base */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        background: #fff;
+        color: var(--grey-900);
+        padding: 40px 70px; /* white-space identical to reference */
+      }
+
+      /* titles */
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      h2 {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+      small {
+        font-size: 12px;
+        color: var(--grey-700);
+      }
+
+      /* generic card */
+      .card {
+        background: #fff;
+        border: 1px solid var(--grey-300);
+        border-radius: 8px;
+        box-shadow: var(--card-shadow);
+      }
+
+      /* ─────────────  TOP STAT TILES  ───────────── */
+      .stats {
+        display: grid;
+        gap: 24px;
+        margin-bottom: 48px;
+
+        /* 👇  Each card = 1 fractional column, so the 3 cards
+         grow evenly and together always fill the full line     */
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+      }
+
+      /* Responsive fall-back (optional, keeps one-line layout down to ~640 px) */
+      @media (max-width: 640px) {
+        .stats {
           grid-template-columns: 1fr;
         }
       }
-
-      .card {
-        background: #fff;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      .stat-card {
+        padding: 20px 24px;
+      }
+      .stat-head {
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 10px;
       }
-
-      .card h3 {
-        margin-top: 0;
+      .stat-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+      }
+      .stat-icon.blue {
+        background: var(--blue-500);
+        box-shadow: inset 0 0 0 4px var(--blue-200);
+      }
+      .stat-icon.green {
+        background: var(--green-500);
+        box-shadow: inset 0 0 0 4px var(--green-200);
+      }
+      .stat-icon.purple {
+        background: var(--purple-500);
+        box-shadow: inset 0 0 0 4px var(--purple-200);
+      }
+      .stat-label {
+        color: var(--grey-700);
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .stat-value {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 14px;
       }
 
-      .card p {
-        color: #666;
-        margin: 10px 0;
+      .progress {
+        height: 6px;
+        border-radius: 3px;
+        background: var(--grey-300);
+        overflow: hidden;
+        margin-bottom: 8px;
+      }
+      .progress > div {
+        height: 100%;
+        width: 0;
+        border-radius: 3px;
+        transition: width 0.6s ease;
       }
 
-      .meta {
-        font-size: 14px;
-        color: #999;
-        margin-bottom: 15px;
+      /* ─────────────  RECENT ACTIVITY TABLE  ───────────── */
+      .activity-wrapper {
+        margin-bottom: 52px;
+      }
+      .activity-table {
+        border: 1px solid var(--grey-300);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        padding: 18px 24px;
+        background: #fff;
+        border-bottom: 1px solid var(--grey-300);
+      }
+      .row:nth-child(even) {
+        background: var(--grey-50);
+      }
+      .row:last-child {
+        border-bottom: none;
+      }
+      .row h4 {
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .row p {
+        font-size: 13px;
+        color: var(--grey-700);
+        margin-top: 2px;
+      }
+      .row time {
+        font-size: 12px;
+        color: var(--grey-600);
+      }
+      .badge {
+        align-self: center;
+        font-size: 12px;
+        font-weight: 600;
+        background: var(--grey-200);
+        border-radius: 999px;
+        padding: 3px 14px;
+        color: black;
       }
 
-      .btn {
-        background: linear-gradient(to right, #6a11cb, #2575fc);
-        border: none;
-        color: white;
-        padding: 10px;
-        font-size: 22px bold;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background 0.3s;
+      /* ─────────────  NEXT-STEPS  ───────────── */
+      .next-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+        gap: 24px;
+        margin-top: 16px;
       }
-
-      .btn:hover,
-      .btn:focus,
-      .btn:active {
-        background: linear-gradient(to right, #5a0fbd, #1e63e5);
-        color: white;
-        outline: none;
+      .next-card {
+        padding: 22px 24px;
+      }
+      .next-card h3 {
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .next-card p {
+        font-size: 13px;
+        color: var(--grey-700);
+        margin-bottom: 14px;
+      }
+      .next-card a {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--blue-500);
+        text-decoration: none;
+      }
+      .next-card a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
@@ -116,7 +264,9 @@
         class="nav nav-underline col-12 col-md-auto mb-2 justify-content-center mb-md-0"
       >
         <li><a href="index.html" class="nav-link px-2">Practice</a></li>
-        <li><a href="dashboard.html" class="nav-link px-2 active">Dashboard</a></li>
+        <li>
+          <a href="dashboard.html" class="nav-link px-2 active">Dashboard</a>
+        </li>
         <li><a href="roleplay.html" class="nav-link px-2">Roleplay</a></li>
       </ul>
       <div class="col-auto text-end me-3 d-flex align-items-center gap-3">
@@ -172,60 +322,144 @@
         </div>
       </div>
     </header>
-    <h1>Practice Sessions</h1>
-    <p class="subtitle">
-      Improve your skills with guided practice using Brian's Value-First
-      framework.
+
+    <!-- ─────────────  PAGE HEADER  ───────────── -->
+    <h1>Dashboard</h1>
+    <p style="color: var(--grey-700); margin-bottom: 30px">
+      Monitor your progress and performance with Brian Choi’s AI Coach.
     </p>
 
-    <div class="grid">
-      <!-- Cards -->
-      <div class="card">
-        <h3>Value Proposition Delivery</h3>
-        <p>
-          Practice articulating your product's unique value in a compelling way.
-        </p>
-        <div class="meta">15 min &nbsp;&bull;&nbsp; Beginner</div>
-        <button class="btn">Start Practice</button>
+    <!-- ─────────────  STATISTICS  ───────────── -->
+    <section class="stats">
+      <div class="card stat-card">
+        <div class="stat-head">
+          <span class="stat-icon blue">12</span>
+          <span class="stat-label">Sessions Completed</span>
+        </div>
+        <div class="stat-value">12</div>
+
+        <div class="progress">
+          <div
+            class="bar"
+            style="background: var(--blue-500)"
+            data-p="60"
+          ></div>
+        </div>
+        <small>60% toward weekly goal</small>
       </div>
 
-      <div class="card">
-        <h3>Objection Handling</h3>
-        <p>
-          Master the art of addressing common sales objections with confidence.
-        </p>
-        <div class="meta">20 min &nbsp;&bull;&nbsp; Intermediate</div>
-        <button class="btn">Start Practice</button>
+      <div class="card stat-card">
+        <div class="stat-head">
+          <span class="stat-icon green">✓</span>
+          <span class="stat-label">Delivery Score</span>
+        </div>
+        <div class="stat-value">86%</div>
+
+        <div class="progress">
+          <div
+            class="bar"
+            style="background: var(--green-500)"
+            data-p="86"
+          ></div>
+        </div>
+        <small>+12% improvement this week</small>
       </div>
 
-      <div class="card">
-        <h3>Discovery Questions</h3>
-        <p>Learn to ask powerful questions that uncover customer needs.</p>
-        <div class="meta">25 min &nbsp;&bull;&nbsp; Beginner</div>
-        <button class="btn">Start Practice</button>
-      </div>
+      <div class="card stat-card">
+        <div class="stat-head">
+          <span class="stat-icon purple">⚙︎</span>
+          <span class="stat-label">Framework Mastery</span>
+        </div>
+        <div class="stat-value">4/7</div>
 
-      <div class="card">
-        <h3>Creating Urgency</h3>
-        <p>Techniques to create genuine urgency without pressure tactics.</p>
-        <div class="meta">30 min &nbsp;&bull;&nbsp; Advanced</div>
-        <button class="btn">Start Practice</button>
+        <div class="progress">
+          <div
+            class="bar"
+            style="background: var(--purple-500)"
+            data-p="57"
+          ></div>
+        </div>
+        <small>Value-First Acquisition™ principles</small>
       </div>
+    </section>
 
-      <div class="card">
-        <h3>Closing Techniques</h3>
-        <p>Practice different closing methods from Brian's framework.</p>
-        <div class="meta">20 min &nbsp;&bull;&nbsp; Intermediate</div>
-        <button class="btn">Start Practice</button>
-      </div>
+    <!-- ─────────────  RECENT ACTIVITY  ───────────── -->
+    <section class="activity-wrapper">
+      <h2>Recent Activity</h2>
 
-      <div class="card">
-        <h3>Follow-up Mastery</h3>
-        <p>Craft follow-up messages that generate responses.</p>
-        <div class="meta">15 min &nbsp;&bull;&nbsp; Beginner</div>
-        <button class="btn">Start Practice</button>
+      <div class="activity-table">
+        <div class="row">
+          <div>
+            <h4>Practice Session</h4>
+            <p>Completed “Cold Outreach Script” practice</p>
+            <time>Today at 10:45 AM</time>
+          </div>
+          <span class="badge">Score: 88%</span>
+        </div>
+
+        <div class="row">
+          <div>
+            <h4>Roleplay</h4>
+            <p>Completed “Handling Price Objections” scenario</p>
+            <time>Yesterday at 3:22 PM</time>
+          </div>
+          <span class="badge">Score: 92%</span>
+        </div>
+
+        <div class="row">
+          <div>
+            <h4>Practice Session</h4>
+            <p>Completed “Value Proposition Delivery” practice</p>
+            <time>May 8 at 2:15 PM</time>
+          </div>
+          <span class="badge">Score: 76%</span>
+        </div>
+
+        <div class="row">
+          <div>
+            <h4>Script Generation</h4>
+            <p>Generated new script for “SaaS Demo Follow-up”</p>
+            <time>May 7 at 11:30 AM</time>
+          </div>
+          <span class="badge">—</span>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- ─────────────  NEXT STEPS  ───────────── -->
+    <section>
+      <h2>Recommended Next Steps</h2>
+
+      <div class="next-grid">
+        <div class="card next-card">
+          <h3>Practice: Urgency Creation</h3>
+          <p>
+            Improve your ability to create genuine urgency without relying on
+            discounts.
+          </p>
+          <a href="#">Start Practice Session →</a>
+        </div>
+
+        <div class="card next-card">
+          <h3>Roleplay: Enterprise Objections</h3>
+          <p>Practice handling complex objections from enterprise buyers.</p>
+          <a href="#">Start Roleplay →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─────────────────────────────────────────────
+     tiny JS -> gently animate / set progress bars
+     ───────────────────────────────────────────── -->
+    <script>
+      document.querySelectorAll(".bar").forEach((bar) => {
+        requestAnimationFrame(() => {
+          // allow paint before growing
+          bar.style.width = bar.dataset.p + "%";
+        });
+      });
+    </script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
